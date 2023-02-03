@@ -28,7 +28,7 @@ func createUser(w http.ResponseWriter, user Types.User) error {
 	}
 
 	// Insert the new user into the database
-	_, err = db.Exec(`INSERT INTO "user".users (username, password) VALUES ($1, $2)`, user.Username, string(hashedPassword))
+	_, err = db.Exec(`INSERT INTO "user".users (name,username, password,roles) VALUES ($1, $2, $3, $4)`, user.Name, user.Username, string(hashedPassword), user.Roles)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		http.Error(w, "issue with connecting db", http.StatusInternalServerError)
